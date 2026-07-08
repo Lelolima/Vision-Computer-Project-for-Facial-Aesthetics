@@ -29,7 +29,7 @@ O Project Vision Computer é uma plataforma avançada de análise facial e simul
 ## Instalação
 1. Clone o repositório:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/Lelolima/Vision-Computer-Project-for-Facial-Aesthetics.git
    cd Project Vision Computer
    ```
 2. Instale as dependências:
