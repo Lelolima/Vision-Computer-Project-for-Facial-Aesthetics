@@ -1,0 +1,255 @@
+<!-- SVG Animado: Análise Facial com Landmarks -->
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes -->
+    <linearGradient id="faceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="landmarkGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00f5ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff00aa;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Animações CSS -->
+    <style>
+      .landmark-point {
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      .landmark-point:nth-child(odd) {
+        animation-delay: 0s;
+      }
+      .landmark-point:nth-child(even) {
+        animation-delay: 0.3s;
+      }
+      .scan-line {
+        animation: scan 3s ease-in-out infinite;
+      }
+      .loading-bar {
+        animation: load 2s ease-in-out infinite;
+      }
+      .score-number {
+        animation: countUp 1s ease-out;
+      }
+      .floating {
+        animation: float 4s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { r: 4; opacity: 1; }
+        50% { r: 7; opacity: 0.6; }
+      }
+      @keyframes scan {
+        0%, 100% { transform: translateY(-100px); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(100px); opacity: 0; }
+      }
+      @keyframes load {
+        0% { width: 0%; }
+        50% { width: 70%; }
+        100% { width: 100%; }
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      @keyframes blink {
+        0%, 48%, 52%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="#0f0f1a"/>
+
+  <!-- Grid de fundo -->
+  <g stroke="#1a1a3e" stroke-width="1">
+    <line x1="0" y1="0" x2="800" y2="0"/>
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    <line x1="0" y1="0" x2="0" y2="450"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+    <line x1="700" y1="0" x2="700" y2="450"/>
+    <line x1="800" y1="0" x2="800" y2="450"/>
+  </g>
+
+  <!-- Título -->
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="bold" class="floating">
+    🔍 Análise Facial com IA
+  </text>
+
+  <!-- Silhueta do rosto (estilizada) -->
+  <g transform="translate(400, 220)" filter="url(#shadow)">
+    <!-- Contorno do rosto -->
+    <ellipse cx="0" cy="0" rx="100" ry="130" fill="url(#faceGradient)" opacity="0.3"/>
+
+    <!-- Olhos -->
+    <g class="eye" style="transform-origin: center;">
+      <ellipse cx="-45" cy="-20" rx="25" ry="15" fill="#1a1a3e" stroke="#667eea" stroke-width="2">
+        <animate attributeName="ry" values="15;1;15" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="-45" cy="-20" r="8" fill="#667eea" filter="url(#glow)"/>
+
+      <ellipse cx="45" cy="-20" rx="25" ry="15" fill="#1a1a3e" stroke="#667eea" stroke-width="2">
+        <animate attributeName="ry" values="15;1;15" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <circle cx="45" cy="-20" r="8" fill="#667eea" filter="url(#glow)"/>
+    </g>
+
+    <!-- Nariz -->
+    <path d="M 0,-10 L -8,40 L 0,50 L 8,40 Z" fill="#667eea" opacity="0.6"/>
+
+    <!-- Boca -->
+    <path d="M -30,70 Q 0,85 30,70" fill="none" stroke="#ff00aa" stroke-width="3" filter="url(#glow)">
+      <animate attributeName="d" values="M -30,70 Q 0,85 30,70;M -30,70 Q 0,75 30,70;M -30,70 Q 0,85 30,70" dur="3s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Linha de contorno facial -->
+    <path d="M -90,-80 Q -110,0 -90,100 Q 0,140 90,100 Q 110,0 90,-80"
+          fill="none" stroke="#667eea" stroke-width="2" stroke-dasharray="5,5" opacity="0.5">
+      <animate attributeName="stroke-dashoffset" values="0;100" dur="10s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Landmarks (pontos de referência) -->
+  <g class="landmarks" filter="url(#glow)">
+    <!-- Testa -->
+    <circle class="landmark-point" cx="400" cy="95" r="4" fill="url(#landmarkGradient)"/>
+    <circle class="landmark-point" cx="360" cy="100" r="4" fill="url(#landmarkGradient)"/>
+    <circle class="landmark-point" cx="440" cy="100" r="4" fill="url(#landmarkGradient)"/>
+
+    <!-- Olhos -->
+    <circle class="landmark-point" cx="355" cy="200" r="4" fill="#00f5ff"/>
+    <circle class="landmark-point" cx="375" cy="195" r="4" fill="#00f5ff"/>
+    <circle class="landmark-point" cx="425" cy="195" r="4" fill="#00f5ff"/>
+    <circle class="landmark-point" cx="445" cy="200" r="4" fill="#00f5ff"/>
+
+    <!-- Nariz -->
+    <circle class="landmark-point" cx="400" cy="230" r="4" fill="#ff00aa"/>
+    <circle class="landmark-point" cx="390" cy="245" r="4" fill="#ff00aa"/>
+    <circle class="landmark-point" cx="410" cy="245" r="4" fill="#ff00aa"/>
+
+    <!-- Boca -->
+    <circle class="landmark-point" cx="370" cy="290" r="4" fill="#ffcc00"/>
+    <circle class="landmark-point" cx="400" cy="285" r="4" fill="#ffcc00"/>
+    <circle class="landmark-point" cx="430" cy="290" r="4" fill="#ffcc00"/>
+
+    <!-- Queixo -->
+    <circle class="landmark-point" cx="400" cy="340" r="4" fill="#00ff88"/>
+
+    <!-- Linhas conectando landmarks -->
+    <path d="M 355,200 L 445,200" stroke="#00f5ff" stroke-width="1" opacity="0.3"/>
+    <path d="M 370,290 L 430,290" stroke="#ffcc00" stroke-width="1" opacity="0.3"/>
+    <path d="M 400,95 L 400,230 L 400,340" stroke="#ff00aa" stroke-width="1" opacity="0.3" stroke-dasharray="3,3">
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Scan line animada -->
+  <line class="scan-line" x1="300" y1="0" x2="500" y2="0" stroke="#00ff88" stroke-width="2" opacity="0.5"/>
+
+  <!-- Painel de Scores -->
+  <g transform="translate(620, 80)" filter="url(#shadow)">
+    <!-- Background do painel -->
+    <rect x="0" y="0" width="160" height="140" rx="10" fill="#1a1a3e" stroke="#667eea" stroke-width="2"/>
+
+    <!-- Título -->
+    <text x="80" y="25" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">MÉTRICAS</text>
+
+    <!-- Score 1: Simetria -->
+    <text x="10" y="45" fill="#aaaaaa" font-size="10">Simetria</text>
+    <rect x="10" y="52" width="140" height="8" rx="2" fill="#2a2a4e"/>
+    <rect x="10" y="52" width="98" height="8" rx="2" fill="url(#landmarkGradient)">
+      <animate attributeName="width" values="0;98" dur="1.5s" fill="freeze"/>
+    </rect>
+    <text x="155" y="60" fill="#00f5ff" font-size="10" font-weight="bold" class="score-number">85%</text>
+
+    <!-- Score 2: Harmonia -->
+    <text x="10" y="75" fill="#aaaaaa" font-size="10">Harmonia</text>
+    <rect x="10" y="82" width="140" height="8" rx="2" fill="#2a2a4e"/>
+    <rect x="10" y="82" width="91" height="8" rx="2" fill="url(#landmarkGradient)">
+      <animate attributeName="width" values="0;91" dur="1.5s" fill="freeze"/>
+    </rect>
+    <text x="155" y="90" fill="#ff00aa" font-size="10" font-weight="bold" class="score-number">78%</text>
+
+    <!-- Score 3: Proporção Áurea -->
+    <text x="10" y="105" fill="#aaaaaa" font-size="10">Prop. Áurea</text>
+    <rect x="10" y="112" width="140" height="8" rx="2" fill="#2a2a4e"/>
+    <rect x="10" y="112" width="105" height="8" rx="2" fill="url(#landmarkGradient)">
+      <animate attributeName="width" values="0;105" dur="1.5s" fill="freeze"/>
+    </rect>
+    <text x="155" y="120" fill="#ffcc00" font-size="10" font-weight="bold" class="score-number">92%</text>
+  </g>
+
+  <!-- Painel de Status -->
+  <g transform="translate(620, 240)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="100" rx="10" fill="#1a1a3e" stroke="#00ff88" stroke-width="2"/>
+
+    <!-- Status -->
+    <circle cx="20" cy="25" r="8" fill="#00ff88">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <text x="40" y="30" fill="#00ff88" font-size="12" font-weight="bold">ANALISANDO</text>
+
+    <!-- Loading bar -->
+    <rect x="10" y="45" width="140" height="6" rx="3" fill="#2a2a4e"/>
+    <rect x="10" y="45" height="6" rx="3" fill="#00ff88" class="loading-bar"/>
+
+    <!-- Info -->
+    <text x="10" y="70" fill="#888888" font-size="9">Landmarks detectados:</text>
+    <text x="145" y="70" fill="#ffffff" font-size="10" font-weight="bold">468</text>
+
+    <text x="10" y="88" fill="#888888" font-size="9">Tempo processamento:</text>
+    <text x="145" y="88" fill="#ffffff" font-size="10" font-weight="bold">0.5s</text>
+  </g>
+
+  <!-- Badge de Ética -->
+  <g transform="translate(620, 360)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="50" rx="10" fill="#1a1a3e" stroke="#ffcc00" stroke-width="2"/>
+    <text x="80" y="20" text-anchor="middle" fill="#ffcc00" font-size="10" font-weight="bold">⚖️ AUDITORIA ÉTICA</text>
+    <text x="80" y="38" text-anchor="middle" fill="#00ff88" font-size="12" font-weight="bold">✅ APROVADO</text>
+  </g>
+
+  <!-- Partículas animadas -->
+  <g fill="#667eea" opacity="0.5">
+    <circle cx="100" cy="100" r="2">
+      <animate attributeName="cy" values="100;400" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="80" r="2">
+      <animate attributeName="cy" values="80;380" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="200" cy="120" r="2">
+      <animate attributeName="cy" values="120;420" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Footer -->
+  <text x="400" y="435" text-anchor="middle" fill="#444466" font-size="10">
+    Vision-Aesthetics v1.0.0 | Powered by PyTorch + MediaPipe + AI Ethics
+  </text>
+</svg>

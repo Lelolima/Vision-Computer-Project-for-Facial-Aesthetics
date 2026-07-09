@@ -1,0 +1,172 @@
+# =============================================================================
+# Vision Computer Project - .gitignore
+# =============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ambientes virtuais
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+#pyximport
+*.pyximport
+*.pyx.gcov
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff
+.ruff_cache/
+
+# =============================================================================
+# Dados e Modelos
+# =============================================================================
+
+# Dados de usuários (NUNCA commitar)
+data/user_images/
+data/processed/
+data/results/
+*.jpg
+*.jpeg
+*.png
+*.gif
+!docs/assets/*.png
+
+# Modelos treinados (usar Git LFS ou download separado)
+models/*.pt
+models/*.pth
+models/*.h5
+models/*.onnx
+!models/.gitkeep
+
+# Cache de modelos
+cache/
+.huggingface/
+.torch/
+
+# Logs
+logs/
+*.log
+
+# =============================================================================
+# Configurações Pessoais
+# =============================================================================
+
+# Arquivos de ambiente (.env contém segredos)
+.env
+.env.local
+.env.*.local
+secrets.json
+credentials.json
+serviceAccountKey.json
+
+# Configurações pessoais
+config.local.yaml
+settings.local.json
+
+# =============================================================================
+# Banco de Dados
+# =============================================================================
+
+# SQLite databases (pode conter dados sensíveis)
+*.db
+*.sqlite
+*.sqlite3
+!data/.gitkeep
+
+# =============================================================================
+# Build e Deploy
+# =============================================================================
+
+# Docker
+docker-compose.override.yml
+.docker/
+
+# Kubernetes secrets
+k8s/secrets.yaml
+k8s/*.secret.*
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# =============================================================================
+# Documentação Gerada
+# =============================================================================
+
+# Sphinx
+docs/_build/
+
+# MkDocs
+site/
+
+# pdoc
+pdoc/
+htmlcov/
+
+# =============================================================================
+# Específicos do Projeto
+# =============================================================================
+
+# Relatórios gerados (podem conter dados de usuários)
+reports/user_*.pdf
+reports/temp/
+
+# Imagens de simulação
+simulations/temp/
+
+#Exports temporários
+exports/*.csv
+exports/*.xlsx
+!exports/.gitkeep
+
+# Arquivos de unlock do Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini

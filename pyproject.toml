@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vision-aesthetics"
+version = "1.0.0"
+description = "Sistema de análise facial estética com IA ética"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Léllo Lima", email = "contato@exemplo.com"}
+]
+keywords = [
+    "facial-analysis",
+    "computer-vision",
+    "aesthetics",
+    "ai-ethics",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Healthcare Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "opencv-python-headless>=4.9.0",
+    "mediapipe>=0.10.11",
+    "torch>=2.2.0",
+    "torchvision>=0.17.0",
+    "numpy>=1.26.0",
+    "Pillow>=10.2.0",
+    "fastapi>=0.109.0",
+    "streamlit>=1.30.0",
+    "pydantic>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "black>=24.1.0",
+    "ruff>=0.1.14",
+]
+gpu = [
+    "torch>=2.2.0+cu118",
+    "torchvision>=0.17.0+cu118",
+]
+gan = [
+    "transformers>=4.37.0",
+    "accelerate>=0.26.0",
+]
+
+[project.scripts]
+vision-aesthetics = "src.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Lelolima/Vision-Computer-Project-for-Facial-Aesthetics"
+Repository = "https://github.com/Lelolima/Vision-Computer-Project-for-Facial-Aesthetics"

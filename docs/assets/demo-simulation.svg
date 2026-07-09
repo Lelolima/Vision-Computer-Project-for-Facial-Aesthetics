@@ -1,0 +1,242 @@
+<!-- SVG Animado: Simulação GAN Antes/Depois -->
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes -->
+    <linearGradient id="beforeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#444455;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222233;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="afterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow-strong">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="leftHalf">
+      <rect x="0" y="0" width="325" height="250"/>
+    </clipPath>
+    <clipPath id="rightHalf">
+      <rect x="75" y="0" width="325" height="250"/>
+    </clipPath>
+
+    <!-- Animações CSS -->
+    <style>
+      .sparkle {
+        animation: sparkle-anim 1.5s ease-in-out infinite;
+      }
+      .slider-knob {
+        animation: slide-knob 4s ease-in-out infinite;
+      }
+      .procedure-text {
+        animation: text-pulse 2s ease-in-out infinite;
+      }
+      .comparison-line {
+        animation: line-shine 2s ease-in-out infinite;
+      }
+      @keyframes sparkle-anim {
+        0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+        50% { opacity: 1; transform: scale(1) rotate(180deg); }
+      }
+      @keyframes slide-knob {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(150px); }
+      }
+      @keyframes text-pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      @keyframes line-shine {
+        0%, 100% { stroke-opacity: 0.5; }
+        50% { stroke-opacity: 1; stroke-width: 4; }
+      }
+      @keyframes morph {
+        0%, 100% { d: path("M 250,100 C 230,120 220,150 230,180 C 240,200 260,200 270,180 C 280,150 270,120 250,100"); }
+        50% { d: path("M 250,100 C 235,120 225,150 235,180 C 245,195 265,195 265,180 C 275,150 265,120 250,100"); }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="#0a0a15"/>
+
+  <!-- Grid sutil -->
+  <g stroke="#151525" stroke-width="1">
+    <line x1="0" y1="0" x2="800" y2="0"/>
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+    <line x1="700" y1="0" x2="700" y2="450"/>
+  </g>
+
+  <!-- Título principal -->
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="bold">
+    ✨ Simulação GAN - Rinoplastia
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#8888aa" font-size="11">
+    Deslize para ver a transformação
+  </text>
+
+  <!-- Container Antes/Depois -->
+  <g transform="translate(100, 75)">
+    <!-- Lado ESQUERDO - ANTES -->
+    <g clip-path="url(#leftHalf)">
+      <!-- Fundo antes -->
+      <rect x="0" y="0" width="600" height="250" fill="url(#beforeGradient)"/>
+
+      <!-- Silhueta antes (nariz mais largo) -->
+      <g transform="translate(300, 125)">
+        <!-- Contorno do rosto -->
+        <ellipse cx="0" cy="0" rx="100" ry="110" fill="#333344" opacity="0.5"/>
+
+        <!-- Olhos -->
+        <ellipse cx="-40" cy="-25" rx="20" ry="12" fill="#444455" stroke="#666677" stroke-width="1.5"/>
+        <circle cx="-40" cy="-25" r="6" fill="#555566"/>
+
+        <ellipse cx="40" cy="-25" rx="20" ry="12" fill="#444455" stroke="#666677" stroke-width="1.5"/>
+        <circle cx="40" cy="-25" r="6" fill="#555566"/>
+
+        <!-- Nariz ANTES (mais largo) -->
+        <path d="M -5,-15 L -15,30 L -8,38 L 0,42 L 8,38 L 15,30 L 5,-15 Z" fill="#555566">
+          <animate attributeName="d" values="
+            M -5,-15 L -15,30 L -8,38 L 0,42 L 8,38 L 15,30 L 5,-15;
+            M -5,-15 L -12,30 L -6,38 L 0,40 L 6,38 L 12,30 L 5,-15;
+            M -5,-15 L -15,30 L -8,38 L 0,42 L 8,38 L 15,30 L 5,-15"
+            dur="4s" repeatCount="indefinite"/>
+        </path>
+        <line x1="-12" y1="25" x2="12" y2="25" stroke="#444455" stroke-width="2" opacity="0.5"/>
+
+        <!-- Boca -->
+        <path d="M -25,65 Q 0,72 25,65" fill="none" stroke="#666677" stroke-width="2"/>
+
+        <!-- Sobrancelhas -->
+        <path d="M -55,-40 Q -40,-50 -25,-40" fill="none" stroke="#444455" stroke-width="2"/>
+        <path d="M 25,-40 Q 40,-50 55,-40" fill="none" stroke="#444455" stroke-width="2"/>
+      </g>
+
+      <!-- Label ANTES -->
+      <text x="50" y="230" fill="#aaaaaa" font-size="14" font-weight="bold">⬅ ANTES</text>
+    </g>
+
+    <!-- Lado DIREITO - DEPOIS -->
+    <g clip-path="url(#rightHalf)">
+      <!-- Fundo depois -->
+      <rect x="0" y="0" width="600" height="250" fill="url(#afterGradient)"/>
+
+      <!-- Silhueta depois (nariz refinado) -->
+      <g transform="translate(300, 125)">
+        <!-- Contorno do rosto (mais brilhante) -->
+        <ellipse cx="0" cy="0" rx="100" ry="110" fill="rgba(102,126,234,0.3)" filter="url(#glow-strong)"/>
+
+        <!-- Olhos (mais brilhantes) -->
+        <ellipse cx="-40" cy="-25" rx="20" ry="12" fill="#2a2a4a" stroke="#667eea" stroke-width="2"/>
+        <circle cx="-40" cy="-25" r="6" fill="#667eea" filter="url(#glow-strong)"/>
+
+        <ellipse cx="40" cy="-25" rx="20" ry="12" fill="#2a2a4a" stroke="#667eea" stroke-width="2"/>
+        <circle cx="40" cy="-25" r="6" fill="#667eea" filter="url(#glow-strong)"/>
+
+        <!-- Nariz DEPOIS (refinado) -->
+        <path d="M -4,-15 L -10,30 L -5,38 L 0,40 L 5,38 L 10,30 L 4,-15 Z" fill="#7a7eb8">
+          <animate attributeName="d" values="
+            M -4,-15 L -10,30 L -5,38 L 0,40 L 5,38 L 10,30 L 4,-15;
+            M -4,-15 L -8,30 L -4,38 L 0,39 L 4,38 L 8,30 L 4,-15;
+            M -4,-15 L -10,30 L -5,38 L 0,40 L 5,38 L 10,30 L 4,-15"
+            dur="4s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Boca -->
+        <path d="M -25,65 Q 0,75 25,65" fill="none" stroke="#aa88dd" stroke-width="2">
+          <animate attributeName="d" values="M -25,65 Q 0,75 25,65;M -25,65 Q 0,70 25,65;M -25,65 Q 0,75 25,65" dur="3s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Sobrancelhas -->
+        <path d="M -55,-40 Q -40,-50 -25,-40" fill="none" stroke="#667eea" stroke-width="2"/>
+        <path d="M 25,-40 Q 40,-50 55,-40" fill="none" stroke="#667eea" stroke-width="2"/>
+
+        <!-- Sparkles/Brilhos -->
+        <g class="sparkle" fill="url(#sparkleGradient)">
+          <polygon points="80,-60 82,-55 87,-55 83,-50 85,-45 80,-48 75,-45 77,-50 73,-55 78,-55" transform="translate(0,0) scale(0.5)">
+            <animateTransform attributeName="transform" type="rotate" from="0 80 -50" to="360 80 -50" dur="3s" repeatCount="indefinite"/>
+          </polygon>
+          <polygon points="80,-60 82,-55 87,-55 83,-50 85,-45 80,-48 75,-45 77,-50 73,-55 78,-55" transform="translate(-100, 50) scale(0.4)">
+            <animateTransform attributeName="transform" type="rotate" from="360 -20 0" to="0 -20 0" dur="4s" repeatCount="indefinite"/>
+          </polygon>
+          <polygon points="80,-60 82,-55 87,-55 83,-50 85,-45 80,-48 75,-45 77,-50 73,-55 78,-55" transform="translate(100, 70) scale(0.3)">
+            <animateTransform attributeName="transform" type="rotate" from="0 180 120" to="360 180 120" dur="5s" repeatCount="indefinite"/>
+          </polygon>
+        </g>
+      </g>
+
+      <!-- Label DEPOIS -->
+      <text x="520" y="230" fill="#667eea" font-size="14" font-weight="bold">DEPOIS ➔</text>
+    </g>
+
+    <!-- Linha divisória central (slider) -->
+    <line class="comparison-line" x1="375" y1="0" x2="375" y2="250"
+          stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+          opacity="0.8" filter="url(#glow-strong)"/>
+
+    <!-- Knob do slider animado -->
+    <g class="slider-knob" transform="translate(375, 125)">
+      <circle cx="0" cy="0" r="20" fill="#ffffff" filter="url(#glow-strong)"/>
+      <circle cx="0" cy="0" r="15" fill="#667eea"/>
+      <!-- Setas esquerda/direita -->
+      <path d="M -8,0 L -3,-5 L -3,5 Z" fill="#ffffff"/>
+      <path d="M 8,0 L 3,-5 L 3,5 Z" fill="#ffffff"/>
+    </g>
+  </g>
+
+  <!-- Painel de Informações -->
+  <g transform="translate(100, 340)">
+    <!-- Procedimento -->
+    <rect x="0" y="0" width="200" height="80" rx="10" fill="#1a1a2e" stroke="#667eea" stroke-width="2"/>
+    <text x="100" y="25" text-anchor="middle" fill="#8888aa" font-size="10">PROCEDIMENTO</text>
+    <text x="100" y="48" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold" class="procedure-text">Rinoplastia</text>
+    <text x="100" y="68" text-anchor="middle" fill="#667eea" font-size="11">Intensidade: 75%</text>
+  </g>
+
+  <g transform="translate(320, 340)">
+    <!-- Métricas de mudança -->
+    <rect x="0" y="0" width="200" height="80" rx="10" fill="#1a1a2e" stroke="#00ff88" stroke-width="2"/>
+    <text x="100" y="25" text-anchor="middle" fill="#8888aa" font-size="10">MELHORIAS</text>
+
+    <text x="10" y="48" fill="#aaaaaa" font-size="11">Simetria nasal:</text>
+    <text x="140" y="48" fill="#00ff88" font-size="12" font-weight="bold">+18%</text>
+
+    <text x="10" y="68" fill="#aaaaaa" font-size="11">Proporção:</text>
+    <text x="140" y="68" fill="#ffcc00" font-size="12" font-weight="bold">1.618 ✨</text>
+  </g>
+
+  <g transform="translate(540, 340)">
+    <!-- Status GAN -->
+    <rect x="0" y="0" width="180" height="80" rx="10" fill="#1a1a2e" stroke="#ff00aa" stroke-width="2"/>
+    <text x="90" y="25" text-anchor="middle" fill="#8888aa" font-size="10">MODELO GAN</text>
+    <text x="90" y="45" text-anchor="middle" fill="#ff00aa" font-size="13" font-weight="bold">StyleGAN2</text>
+    <text x="90" y="65" text-anchor="middle" fill="#00ff88" font-size="10">GPU: ✅ Ativo</text>
+  </g>
+
+  <!-- Notas técnicas -->
+  <text x="400" y="435" text-anchor="middle" fill="#444466" font-size="9">
+    GAN Simulator com fallback OpenCV | Auditoria ética em tempo real | EU AI Act compliant
+  </text>
+</svg>

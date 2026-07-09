@@ -1,34 +1,100 @@
-opencv-python==4.8.1.78
-mediapipe==0.10.7
-numpy==1.24.3
-Pillow==10.0.1
-scipy==1.11.4
-matplotlib==3.7.2
-scikit-image==0.21.0
-dlib==19.24.2
-tensorflow==2.13.0
-torch==2.0.1
-torchvision==0.15.2
-facenet-pytorch==2.5.3
+# =============================================================================
+# Vision Computer Project - Facial Aesthetics
+# Requisitos principais
+# =============================================================================
+
+# Computer Vision
+opencv-python-headless==4.9.0.80
+mediapipe==0.10.11
+Pillow==10.2.0
+scikit-image==0.22.0
+scipy==1.12.0
+
+# Deep Learning (CPU base)
+torch==2.2.0
+torchvision==0.17.0
+torchaudio==2.2.0
+
+# Alternativa para GPU (descomentar se necessário)
+# --extra-index-url https://download.pytorch.org/whl/cu118
+# torch==2.2.0+cu118
+# torchvision==0.17.0+cu118
+
+# NumPy
+numpy==1.26.3
+
+# =============================================================================
+# Interfaces
+# =============================================================================
+
+# Web App
+streamlit==1.30.0
+plotly==5.18.0
+
+# Desktop
+PyQt5==5.15.10
+pyqtgraph==0.13.4
+
+# API
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# =============================================================================
+# Dados e Relatórios
+# =============================================================================
+
+pandas==2.2.0
+openpyxl==3.1.2
+reportlab==4.0.9
+
+# =============================================================================
+# Modelos Avançados (opcionais)
+# =============================================================================
+
+# Face Analysis
 insightface==0.7.3
-psutil==5.9.5
+facenet-pytorch==2.5.3
+
+# GANs para simulação (opcional - requer GPU para inferência)
+# transformers==4.37.0  # Para modelos do Hugging Face
+
+# =============================================================================
+# Utilitários
+# =============================================================================
+
+psutil==5.9.7
 requests==2.31.0
 joblib==1.3.2
-seaborn==0.12.2
-pandas==2.0.3
-streamlit==1.28.1
-plotly==5.17.0
-openpyxl==3.1.2
-PyQt5==5.15.9
-sklearn==1.3.0
-plotly==5.17.0
-streamlit==1.28.1
-fastapi==0.104.1
-uvicorn==0.24.0
-pydantic==2.5.0
-sqlalchemy==2.0.23
-alembic==1.12.1
-pytest==7.4.3
-black==23.11.0
-flake8==6.1.0
-tkinter```
+tqdm==4.66.1
+aiofiles==23.2.1
+
+# Database
+sqlalchemy==2.0.25
+alembic==1.13.1
+
+# =============================================================================
+# Desenvolvimento e Qualidade
+# =============================================================================
+
+pytest==7.4.4
+pytest-cov==4.1.0
+pytest-asyncio==0.23.3
+pytest-mock==3.12.0
+
+# Type checking
+mypy==1.8.0
+
+# Linting e formatação
+black==24.1.0
+flake8==7.0.0
+ruff==0.1.14
+isort==5.13.2
+
+# =============================================================================
+# Ética e Segurança
+# =============================================================================
+
+# Para explainability (opcional)
+# shap==0.43.0
+# lime==0.2.0.1```

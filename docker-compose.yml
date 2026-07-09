@@ -1,0 +1,180 @@
+# =============================================================================
+# Docker Compose - Vision Computer Project
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # =============================================================================
+  # Serviço Principal: Web App + API
+  # =============================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: vision-aesthetics-app
+    restart: unless-stopped
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      # Persistência de dados
+      - ./data:/app/data
+      - ./models:/app/models:ro  # Somente leitura para modelos
+      - ./logs:/app/logs
+      - ./ethics_logs:/app/ethics_logs
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - ETHICS_STRICT_MODE=${ETHICS_STRICT_MODE:-true}
+      - DATA_RETENTION_DAYS=${DATA_RETENTION_DAYS:-7}
+      - INFERENCE_DEVICE=${INFERENCE_DEVICE:-cpu}
+      - GAN_MODEL_TYPE=${GAN_MODEL_TYPE:-fallback}
+      - DATABASE_URL=sqlite:///./data/vision_aesthetics.db
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+        reservations:
+          cpus: '2'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/v1/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - vision-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # =============================================================================
+  # Serviço: Banco de Dados (PostgreSQL - opcional)
+  # =============================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: vision-aesthetics-db
+    restart: unless-stopped
+    profiles:
+      - with-db  # Usar apenas com: docker-compose --profile with-db up
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      POSTGRES_USER: ${DB_USER:-vision_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password_change_me}
+      POSTGRES_DB: ${DB_NAME:-vision_aesthetics}
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-vision_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vision-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  # =============================================================================
+  # Serviço: NGINX Reverse Proxy (produção)
+  # =============================================================================
+  nginx:
+    image: nginx:alpine
+    container_name: vision-aesthetics-nginx
+    restart: unless-stopped
+    profiles:
+      - production  # Usar apenas em produção
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - vision-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # =============================================================================
+  # Serviço: Monitoramento (Prometheus + Grafana)
+  # =============================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: vision-aesthetics-prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - vision-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: vision-aesthetics-grafana
+    restart: unless-stopped
+    profiles:
+      - monitoring
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus
+    networks:
+      - vision-network
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  vision-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

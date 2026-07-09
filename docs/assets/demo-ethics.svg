@@ -1,0 +1,245 @@
+<!-- SVG Animado: Dashboard de Ética e Auditoria -->
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes -->
+    <linearGradient id="ethicsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00b894;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cec9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="warningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fdcb6e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e17055;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dangerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e17055;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d63031;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow-green">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Animações CSS -->
+    <style>
+      .check-icon {
+        animation: check-anim 0.6s ease-out forwards;
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+      }
+      @keyframes check-anim {
+        to { stroke-dashoffset: 0; }
+      }
+      .meter-fill {
+        animation: fill-meter 1.5s ease-out forwards;
+      }
+      @keyframes fill-meter {
+        from { width: 0; opacity: 0; }
+        to { width: var(--target-width); opacity: 1; }
+      }
+      .pulse-ring {
+        animation: pulse-ring-anim 2s ease-out infinite;
+      }
+      @keyframes pulse-ring-anim {
+        0% { transform: scale(0.8); opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+      .float {
+        animation: float-anim 3s ease-in-out infinite;
+      }
+      @keyframes float-anim {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+      .shield-shine {
+        animation: shield-shine-anim 3s linear infinite;
+      }
+      @keyframes shield-shine-anim {
+        0% { opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="#0a0a15"/>
+
+  <!-- Grid -->
+  <g stroke="#151525" stroke-width="1">
+    <line x1="0" y1="0" x2="800" y2="0"/>
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+    <line x1="700" y1="0" x2="700" y2="450"/>
+  </g>
+
+  <!-- Título -->
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="bold" class="float">
+    ⚖️ Dashboard de Ética e Auditoria
+  </text>
+
+  <!-- Escudo de proteção (centro) -->
+  <g transform="translate(400, 140)" class="float">
+    <!-- Shield outer -->
+    <path d="M 0,-60 L 50,-40 L 50,20 Q 50,60 0,80 Q -50,60 -50,20 L -50,-40 Z"
+          fill="none" stroke="#00b894" stroke-width="3" filter="url(#glow-green)"/>
+    <!-- Shield inner -->
+    <path d="M 0,-45 L 35,-30 L 35,15 Q 35,45 0,60 Q -35,45 -35,15 L -35,-30 Z"
+          fill="rgba(0,184,148,0.1)" stroke="#00b894" stroke-width="2"/>
+    <!-- Shine effect -->
+    <ellipse cx="0" cy="0" rx="40" ry="50" fill="url(#ethicsGradient)" opacity="0.1" class="shield-shine"/>
+    <!-- Check mark no centro -->
+    <path class="check-icon" d="M -25,0 L -5,20 L 25,-20"
+          fill="none" stroke="#00b894" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Ring pulsante ao redor do escudo -->
+  <g transform="translate(400, 140)">
+    <ellipse cx="0" cy="0" rx="70" ry="90" fill="none" stroke="#00b894" stroke-width="1"
+             class="pulse-ring" opacity="0.3"/>
+    <ellipse cx="0" cy="0" rx="75" ry="95" fill="none" stroke="#00b894" stroke-width="1"
+             class="pulse-ring" opacity="0.2" style="animation-delay: 0.5s"/>
+    <ellipse cx="0" cy="0" rx="80" ry="100" fill="none" stroke="#00b894" stroke-width="1"
+             class="pulse-ring" opacity="0.1" style="animation-delay: 1s"/>
+  </g>
+
+  <!-- Painel ESQUERDO - Princípios Éticos -->
+  <g transform="translate(50, 220)">
+    <rect x="0" y="0" width="300" height="180" rx="12" fill="#1a1a2e" stroke="#00b894" stroke-width="2" filter="url(#shadow)"/>
+
+    <!-- Título -->
+    <text x="150" y="28" text-anchor="middle" fill="#00b894" font-size="13" font-weight="bold">
+      📋 PRINCÍPIOS ÉTICOS
+    </text>
+
+    <!-- Lista de princípios com checks -->
+    <g transform="translate(15, 45)">
+      <!-- Fairness -->
+      <circle cx="10" cy="10" r="10" fill="#00b894" opacity="0.2"/>
+      <path d="M 5,10 L 9,14 L 15,6" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="14" fill="#ffffff" font-size="11">Fairness (Equidade)</text>
+
+      <!-- Transparency -->
+      <circle cx="10" cy="35" r="10" fill="#00b894" opacity="0.2"/>
+      <path d="M 5,35 L 9,39 L 15,31" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="39" fill="#ffffff" font-size="11">Transparency</text>
+
+      <!-- Privacy -->
+      <circle cx="10" cy="60" r="10" fill="#00b894" opacity="0.2"/>
+      <path d="M 5,60 L 9,64 L 15,56" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="64" fill="#ffffff" font-size="11">Privacy (Privacidade)</text>
+
+      <!-- Accountability -->
+      <circle cx="10" cy="85" r="10" fill="#00b894" opacity="0.2"/>
+      <path d="M 5,85 L 9,89 L 15,81" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="89" fill="#ffffff" font-size="11">Accountability</text>
+
+      <!-- Non-maleficence -->
+      <circle cx="10" cy="110" r="10" fill="#00b894" opacity="0.2"/>
+      <path d="M 5,110 L 9,114 L 15,106" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="114" fill="#ffffff" font-size="11">Non-maleficence</text>
+
+      <!-- Autonomy -->
+      <circle cx="10" cy="135" r="10" fill="#00cec9" opacity="0.2"/>
+      <path d="M 5,135 L 9,139 L 15,131" fill="none" stroke="#00cec9" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="139" fill="#ffffff" font-size="11">Autonomy (Autonomia)</text>
+
+      <!-- Beneficence -->
+      <circle cx="10" cy="160" r="10" fill="#00cec9" opacity="0.2"/>
+      <path d="M 5,160 L 9,164 L 15,156" fill="none" stroke="#00cec9" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="30" y="164" fill="#ffffff" font-size="11">Beneficence</text>
+    </g>
+  </g>
+
+  <!-- Painel DIREITO - Métricas de Bias -->
+  <g transform="translate(450, 220)">
+    <rect x="0" y="0" width="300" height="180" rx="12" fill="#1a1a2e" stroke="#fdcb6e" stroke-width="2"/>
+
+    <!-- Título -->
+    <text x="150" y="28" text-anchor="middle" fill="#fdcb6e" font-size="13" font-weight="bold">
+      📊 DETECÇÃO DE BIAS
+    </text>
+
+    <!-- Métricas -->
+    <g transform="translate(15, 50)">
+      <!-- Gender Bias -->
+      <text x="0" y="0" fill="#aaaaaa" font-size="10">Gênero</text>
+      <rect x="70" y="-8" width="200" height="12" rx="4" fill="#2a2a4e"/>
+      <rect x="70" y="-8" width="40" height="12" rx="4" fill="url(#ethicsGradient)" class="meter-fill" style="--target-width: 40px"/>
+      <text x="275" y="2" fill="#00b894" font-size="11" font-weight="bold">12%</text>
+
+      <!-- Ethnicity Bias -->
+      <text x="0" y="30" fill="#aaaaaa" font-size="10">Etnia</text>
+      <rect x="70" y="22" width="200" height="12" rx="4" fill="#2a2a4e"/>
+      <rect x="70" y="22" width="50" height="12" rx="4" fill="url(#ethicsGradient)" class="meter-fill" style="--target-width: 50px; animation-delay: 0.2s"/>
+      <text x="275" y="32" fill="#00b894" font-size="11" font-weight="bold">15%</text>
+
+      <!-- Age Bias -->
+      <text x="0" y="60" fill="#aaaaaa" font-size="10">Idade</text>
+      <rect x="70" y="52" width="200" height="12" rx="4" fill="#2a2a4e"/>
+      <rect x="70" y="52" width="30" height="12" rx="4" fill="url(#ethicsGradient)" class="meter-fill" style="--target-width: 30px; animation-delay: 0.4s"/>
+      <text x="275" y="62" fill="#00b894" font-size="11" font-weight="bold">8%</text>
+
+      <!-- Overall Score -->
+      <text x="0" y="90" fill="#ffffff" font-size="11" font-weight="bold">Overall</text>
+      <rect x="70" y="82" width="200" height="14" rx="5" fill="#2a2a4e"/>
+      <rect x="70" y="82" width="70" height="14" rx="5" fill="url(#ethicsGradient)" class="meter-fill" style="--target-width: 70px; animation-delay: 0.6s"/>
+      <text x="275" y="92" fill="#00b894" font-size="12" font-weight="bold">LOW</text>
+    </g>
+  </g>
+
+  <!-- Painel INFERIOR - Status e Compliance -->
+  <g transform="translate(50, 410)">
+    <!-- EU AI Act Badge -->
+    <rect x="0" y="0" width="140" height="30" rx="8" fill="#1a1a2e" stroke="#00b894" stroke-width="2"/>
+    <text x="70" y="20" text-anchor="middle" fill="#00b894" font-size="10" font-weight="bold">✅ EU AI Act</text>
+
+    <!-- GDPR Badge -->
+    <rect x="150" y="0" width="140" height="30" rx="8" fill="#1a1a2e" stroke="#00b894" stroke-width="2"/>
+    <text x="205" y="20" text-anchor="middle" fill="#00b894" font-size="10" font-weight="bold">✅ GDPR/LGPD</text>
+
+    <!-- Audit Log Badge -->
+    <rect x="300" y="0" width="140" height="30" rx="8" fill="#1a1a2e" stroke="#00cec9" stroke-width="2"/>
+    <text x="370" y="20" text-anchor="middle" fill="#00cec9" font-size="10" font-weight="bold">📝 Audit Log</text>
+
+    <!-- Audit ID -->
+    <rect x="450" y="0" width="300" height="30" rx="8" fill="#1a1a2e" stroke="#667eea" stroke-width="2"/>
+    <text x="465" y="20" fill="#8888aa" font-size="10">Audit ID:</text>
+    <text x="520" y="20" fill="#667eea" font-size="10" font-family="monospace">abc123def456</text>
+  </g>
+
+  <!-- Partículas/Elementos decorativos -->
+  <g fill="#00b894" opacity="0.3">
+    <circle cx="100" cy="100" r="2">
+      <animate attributeName="cy" values="100;400;100" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="80" r="2">
+      <animate attributeName="cy" values="80;380;80" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="400" r="2">
+      <animate attributeName="cy" values="400;50;400" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Footer -->
+  <text x="400" y="442" text-anchor="middle" fill="#444466" font-size="9">
+    AI Ethics Framework v1.0.0 | EU AI Act Compliant | Audit Trail Enabled
+  </text>
+</svg>
