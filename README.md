@@ -701,7 +701,7 @@ Testado em Python 3.11 (o pin `mediapipe==0.10.14` não tem wheel para 3.13).
 git clone https://github.com/Lelolima/Vision-Computer-Project-for-Facial-Aesthetics.git
 cd Vision-Computer-Project-for-Facial-Aesthetics
 python -m venv venv
-venvScriptsctivate          # Windows  (Linux/macOS: source venv/bin/activate)
+venv\Scripts\activate          # Windows  (Linux/macOS: source venv/bin/activate)
 
 # Instalação mínima (API + testes, CPU):
 pip install torch==2.15.0 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cpu
