@@ -127,13 +127,15 @@ class AdvancedSimulationEngine:
         # Aplicar cor de lábio mais vibrante
         lip_color_boost = np.array([1.0, 0.8, 1.0]) # Aumentar componente vermelho
         
+        found = cv2.findNonZero(mask)
+        # findNonZero pode retornar None (máscara vazia) ou shape (N, 2) em vez de (N, 1, 2)
+        non_zero = found.reshape(-1, 2) if found is not None else np.empty((0, 2), dtype=np.int32)
         for y, x in zip(indices[0], indices[1]):
-            if mask[y, x] == 0:  # Apenas na borda expandida
+            if mask[y, x] == 0 and len(non_zero):  # Apenas na borda expandida
                 # Encontrar pixel mais próximo na máscara original
-                non_zero = cv2.findNonZero(mask)
-                distances = np.sqrt((non_zero[:,:,0] - x) ** 2 + (non_zero[:,:,1] - y) ** 2)
+                distances = np.sqrt((non_zero[:, 0] - x) ** 2 + (non_zero[:, 1] - y) ** 2)
                 nearest_idx = np.argmin(distances)
-                nx, ny = non_zero[nearest_idx][0]
+                nx, ny = non_zero[nearest_idx]
                 
                 # Copiar cor do pixel mais próximo
                 result[y, x] = image[ny, nx]

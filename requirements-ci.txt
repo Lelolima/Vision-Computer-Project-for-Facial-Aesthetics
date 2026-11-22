@@ -1,0 +1,23 @@
+# Subconjunto mínimo para CI (sem PyQt5, insightface, facenet, streamlit).
+# Versões iguais às validadas localmente em 2026-11-22 (Python 3.11).
+# torch/torchvision CPU são instalados separadamente no workflow.
+numpy==2.4.6
+opencv-python-headless==5.1.0.95
+mediapipe==0.10.14
+Pillow==13.0.0
+scikit-image==0.26.0
+scipy==1.17.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+seaborn==0.13.2
+pandas==3.1.1
+plotly==7.1.0
+reportlab==5.1.0
+fastapi==0.165.0
+python-multipart==0.0.34
+httpx==0.28.1
+pytest==9.2.0
+pytest-cov==7.1.0
+pytest-asyncio==1.5.0
+pytest-mock==3.17.0
+ruff==0.17.6

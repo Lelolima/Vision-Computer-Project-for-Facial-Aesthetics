@@ -695,41 +695,53 @@
 
 ## 🚀 Instalação
 
+Testado em Python 3.11 (o pin `mediapipe==0.10.14` não tem wheel para 3.13).
+
 ```bash
 git clone https://github.com/Lelolima/Vision-Computer-Project-for-Facial-Aesthetics.git
 cd Vision-Computer-Project-for-Facial-Aesthetics
 python -m venv venv
-venv\Scripts\activate  # Windows
+venv\Scripts\activate          # Windows  (Linux/macOS: source venv/bin/activate)
+
+# Instalação mínima (API + testes, CPU):
+pip install torch==2.15.0 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements-ci.txt
+
+# Instalação completa (inclui Streamlit, PyQt5, insightface, facenet):
 pip install -r requirements.txt
-pip install -e .
 ```
 
 ---
 
 ## 💻 Uso
 
-### Streamlit App
-```bash
-streamlit run src/ui/streamlit_app.py  # http://localhost:8501
-```
-
 ### API REST
 ```bash
 uvicorn src.api.main:app --reload  # http://localhost:8000/docs
 ```
 
+- `POST /api/v1/analyze` executa MediaPipe FaceMesh de verdade. Imagem sem rosto detectável
+  retorna **422**; arquivo que não é imagem retorna **400**. Não há pontuações fixas/simuladas.
+- `POST /api/v1/simulate` usa o modo `fallback` (filtros OpenCV). Não há pesos GAN no repositório;
+  os geradores Pix2Pix/CycleGAN só funcionam com um checkpoint próprio (`GANSimulatorConfig(model_path=...)`).
+- `GET /api/v1/report/{id}` ainda **não está implementado** (retorna `status: not_implemented`).
+
+### Streamlit / Desktop
+```bash
+streamlit run src/ui/streamlit_app.py  # http://localhost:8501
+python main.py                         # interface Tkinter
+```
+
 ### Exemplo Python
 ```python
-from src.core.analyzer import FacialAnalyzer
-from src.ai.gan_simulator import GANSimulator
+from src.core.analyzer import FacialAnalyzer, FaceNotDetectedError
 from src.ethics.ai_ethics import AIEthicsFramework
 
 analyzer = FacialAnalyzer()
-simulator = GANSimulator()
-ethics = AIEthicsFramework()
-
-results = analyzer.analyze("photo.jpg")
-ethics_report = ethics.audit_analysis(results)
+try:
+    results = analyzer.analyze("photo.jpg")
+except FaceNotDetectedError:
+    results = None
 ```
 
 ---
@@ -738,45 +750,36 @@ ethics_report = ethics.audit_analysis(results)
 
 ```
 src/
-├── core/           # Análise facial, landmarks, métricas
-├── ai/             # GAN Simulator (StyleGAN, Pix2Pix)
-├── ethics/         # Framework de ética (EU AI Act)
-├── ui/             # Streamlit, PyQt5
+├── core/           # analyzer.py (fachada), advanced_analysis.py (MediaPipe), simulação OpenCV
+├── ai/             # GAN Simulator (fallback OpenCV; Pix2Pix/CycleGAN exigem checkpoint)
+├── ethics/         # Framework de auditoria ética
+├── reports/        # Relatórios HTML/JSON
+├── ui/             # Streamlit e Tkinter
 └── api/            # FastAPI REST
 ```
 
 ---
 
-## ⚖️ Ética em IA
+## 🔧 Variáveis de ambiente
 
-| Princípio | Implementação |
-|-----------|---------------|
-| **Fairness** | Detecção de bias (gênero, etnia, idade) |
-| **Transparency** | Explicações + intervalos de confiança |
-| **Privacy** | Processamento local, consentimento |
-| **Accountability** | Logs auditáveis, IDs únicos |
-| **Non-maleficence** | Bloqueio de simulações prejudiciais |
+Apenas estas são lidas pelo código hoje (veja `.env.example`):
 
----
-
-## 📡 API
-
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| POST | `/api/v1/analyze` | Analisar imagem |
-| POST | `/api/v1/simulate` | Simular procedimento |
-| POST | `/api/v1/ethics/audit` | Auditoria ética |
-| GET | `/api/v1/health` | Health check |
+| Variável | Padrão | Uso |
+|----------|--------|-----|
+| `CORS_ORIGINS` | `http://localhost:3000` | Origens CORS da API (separadas por vírgula) |
+| `ETHICS_STRICT_MODE` | `false` | Modo estrito da auditoria ética |
 
 ---
 
 ## 🧪 Testes
 
 ```bash
-pytest                       # Todos
-pytest --cov=src            # Coverage
-pytest tests/unit/          # Unitários
+python -m pytest --no-cov            # todos (imagens sintéticas, sem GPU nem câmera)
+python -m pytest tests/unit --no-cov
+ruff check --select E9,F63,F7,F82 src tests main.py
 ```
+
+O CI (`.github/workflows/ci.yml`) executa lint, `compileall` e testes em Python 3.11 / CPU.
 
 ---
 

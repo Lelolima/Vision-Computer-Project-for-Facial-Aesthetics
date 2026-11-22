@@ -19,6 +19,7 @@ Baseado em:
 
 import json
 import hashlib
+import uuid
 from datetime import datetime
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
@@ -532,7 +533,7 @@ class AIEthicsFramework:
 
     def _generate_audit_id(self, timestamp: str, results: Dict[str, Any]) -> str:
         """Gera ID único para auditoria."""
-        content = f"{timestamp}-{json.dumps(results, sort_keys=True)}"
+        content = f"{timestamp}-{uuid.uuid4().hex}-{json.dumps(results, sort_keys=True, default=str)}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
 
     def _log_audit(self, result: EthicsAuditResult):

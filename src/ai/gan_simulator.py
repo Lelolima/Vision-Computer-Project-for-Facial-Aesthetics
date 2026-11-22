@@ -94,7 +94,7 @@ class GANSimulator:
                 mean=[-1, -1, -1],
                 std=[2, 2, 2]
             ),
-            transforms.Clamp(0, 1)
+            transforms.Lambda(lambda t: t.clamp(0, 1))
         ])
 
         # Carregar modelo
@@ -291,9 +291,9 @@ class GANSimulator:
         # Realçar saturação na região inferior (lábios)
         hsv = cv2.cvtColor(result, cv2.COLOR_RGB2HSV)
         h, s, v = cv2.split(hsv)
-        lower_h, s_lower = s.shape[0], s.shape[1]
+        rows = s.shape[0]
         # Aumentar saturação na metade inferior
-        s[h_lower//2:, :] = np.clip(s[h//2:, :] * (1 + intensity * 0.5), 0, 255)
+        s[rows // 2:, :] = np.clip(s[rows // 2:, :] * (1 + intensity * 0.5), 0, 255).astype(s.dtype)
         hsv = cv2.merge([h, s, v])
         result = cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
         return result

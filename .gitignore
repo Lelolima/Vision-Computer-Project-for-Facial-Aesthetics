@@ -170,3 +170,7 @@ exports/*.xlsx
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+# Saídas geradas em execução/testes
+reports/*.html
+reports/*.json
+ethics_logs/*.json

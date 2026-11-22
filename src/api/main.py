@@ -16,7 +16,7 @@ from typing import Optional, Dict, Any, List
 import os
 from datetime import datetime
 
-from src.core.analyzer import FacialAnalyzer
+from src.core.analyzer import FacialAnalyzer, FaceNotDetectedError, InvalidImageError
 from src.ai.gan_simulator import GANSimulator
 from src.ethics.ai_ethics import AIEthicsFramework, RiskLevel
 
@@ -151,8 +151,12 @@ async def analyze_image(
     # Ler imagem
     contents = await file.read()
 
-    # Análise (stub - implementar completa)
-    results = analyzer.analyze_from_bytes(contents)  # type: ignore
+    try:
+        results = analyzer.analyze_from_bytes(contents)
+    except InvalidImageError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except FaceNotDetectedError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
     results["consent_obtained"] = consent
 
     # Auditoria ética opcional
@@ -200,7 +204,10 @@ async def simulate_procedure(
     contents = await file.read()
     from PIL import Image
     import io
-    image = Image.open(io.BytesIO(contents))
+    try:
+        image = Image.open(io.BytesIO(contents)).convert("RGB")
+    except Exception:
+        raise HTTPException(status_code=400, detail="Arquivo deve ser uma imagem válida")
 
     # Verificação ética
     if ethics_check:
