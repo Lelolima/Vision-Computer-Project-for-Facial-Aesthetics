@@ -52,3 +52,50 @@ def test_analyze_invalid_file(client):
     )
     # Pode falhar na validação de content-type
     assert response.status_code in [400, 422]
+
+def _png_bytes(color=(128, 128, 128)):
+    import io
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (64, 64), color=color).save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def test_analyze_without_face_returns_422_not_fake_scores(client):
+    """Imagem sintética sem rosto não pode gerar pontuações fixas (antes: 500/AttributeError)."""
+    response = client.post(
+        "/api/v1/analyze",
+        files={"file": ("blank.png", _png_bytes(), "image/png")},
+        data={"consent": "true"},
+    )
+    assert response.status_code == 422
+
+
+def test_analyze_invalid_image_returns_400(client):
+    response = client.post(
+        "/api/v1/analyze",
+        files={"file": ("x.png", b"not an image", "image/png")},
+        data={"consent": "true"},
+    )
+    assert response.status_code == 400
+
+
+def test_analyze_requires_consent(client):
+    response = client.post(
+        "/api/v1/analyze",
+        files={"file": ("blank.png", _png_bytes(), "image/png")},
+        data={"consent": "false"},
+    )
+    assert response.status_code == 400
+
+
+def test_simulate_fallback_returns_image(client):
+    response = client.post(
+        "/api/v1/simulate",
+        files={"file": ("blank.png", _png_bytes(), "image/png")},
+        data={"procedure": "preenchimento_labial", "intensity": "0.5"},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["success"] is True and body["image_base64"]
