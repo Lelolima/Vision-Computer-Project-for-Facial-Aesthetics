@@ -16,7 +16,8 @@ class TestGANSimulatorConfig:
         config = GANSimulatorConfig()
         assert config.model_type == "fallback"
         assert config.resolution == 256
-        assert config.device is None
+        # device é detectado automaticamente quando não informado
+        assert config.device in ("cpu", "cuda")
 
     def test_custom_config(self):
         """Testa configuração customizada."""
